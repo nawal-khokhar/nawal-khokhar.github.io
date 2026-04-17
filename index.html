@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Nikkah — Ryan & Nawal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --green-deep: #2d5a3d;
+    --green-mid: #4a7c59;
+    --green-light: #8fbc8f;
+    --pink-soft: #e8b4c8;
+    --pink-deep: #c4789a;
+    --lavender: #b8a9d4;
+    --lavender-light: #ddd5ef;
+    --cream: #faf7f2;
+    --white: #ffffff;
+    --text-dark: #2c2c2c;
+    --text-mid: #5a5a5a;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Lato', sans-serif;
+    background: var(--cream);
+    color: var(--text-dark);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(250,247,242,0.92);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(184,169,212,0.3);
+    display: flex; justify-content: center; gap: 2rem;
+    padding: 0.75rem 1rem;
+    flex-wrap: wrap;
+  }
+  nav a {
+    font-family: 'Lato', sans-serif;
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--green-deep); text-decoration: none;
+    transition: color 0.3s;
+  }
+  nav a:hover { color: var(--pink-deep); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .hero-video {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    z-index: 0;
+  }
+  .hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(
+      135deg,
+      rgba(45,90,61,0.25) 0%,
+      rgba(250,247,242,0.18) 50%,
+      rgba(184,169,212,0.2) 100%
+    );
+    z-index: 1;
+  }
+  .hero-text {
+    position: relative; z-index: 2;
+    text-align: center; padding: 2rem;
+    animation: fadeInUp 1.8s ease forwards;
+  }
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .hero-card {
+    background: rgba(255,255,255,0.68);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(184,169,212,0.45);
+    border-radius: 24px;
+    padding: 2.75rem 3.5rem;
+    display: inline-block;
+    box-shadow: 0 8px 48px rgba(45,90,61,0.14);
+  }
+  .hero-label {
+    font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--green-deep); margin-bottom: 0.75rem;
+    font-family: 'Lato', sans-serif; font-weight: 300;
+  }
+  .hero-names {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 8vw, 5.5rem);
+    font-weight: 300; font-style: italic;
+    color: var(--green-deep); line-height: 1.1;
+  }
+  .hero-and {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    color: var(--pink-deep);
+    display: block; margin: 0.25rem 0;
+  }
+  .hero-date {
+    font-family: 'Lato', sans-serif; font-weight: 300;
+    font-size: 13px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--green-mid); margin-top: 1.25rem;
+  }
+
+  /* falling petals */
+  .falling-petal { display: none; }
+
+  .scroll-hint {
+    position: absolute; bottom: 2rem; left: 50%;
+    transform: translateX(-50%);
+    z-index: 10; text-align: center;
+    animation: bounce 2s ease-in-out infinite;
+  }
+  @keyframes bounce {
+    0%,100% { transform: translateX(-50%) translateY(0); }
+    50%     { transform: translateX(-50%) translateY(-8px); }
+  }
+  .scroll-hint span {
+    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+    color: white; display: block; margin-top: 6px;
+    text-shadow: 0 1px 6px rgba(0,0,0,0.4);
+  }
+  .scroll-arrow {
+    width: 20px; height: 20px;
+    border-right: 1.5px solid white; border-bottom: 1.5px solid white;
+    transform: rotate(45deg); margin: 0 auto;
+  }
+
+  /* ── SHARED SECTION STYLES ── */
+  section { padding: 5rem 1.5rem; }
+  .section-inner { max-width: 780px; margin: 0 auto; }
+  .section-label {
+    font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--lavender); margin-bottom: 0.5rem;
+    font-family: 'Lato', sans-serif;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 300; font-style: italic;
+    color: var(--green-deep); margin-bottom: 1.5rem;
+  }
+  .divider {
+    width: 60px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--pink-soft), transparent);
+    margin: 1.5rem auto;
+  }
+  .section-text {
+    font-size: 15px; line-height: 1.9;
+    color: var(--text-mid); font-weight: 300;
+  }
+
+  /* ── NIKKAH ── */
+  #nikkah { background: var(--white); }
+  .detail-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1.5rem; margin: 2.5rem 0;
+  }
+  .detail-card {
+    text-align: center; padding: 1.75rem 1rem;
+    border: 1px solid rgba(184,169,212,0.35);
+    border-radius: 16px;
+    background: linear-gradient(135deg, rgba(250,247,242,0.8), rgba(221,213,239,0.2));
+  }
+  .detail-icon { font-size: 22px; margin-bottom: 0.75rem; }
+  .detail-label {
+    font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--lavender); margin-bottom: 0.4rem;
+  }
+  .detail-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; color: var(--green-deep); font-style: italic;
+  }
+  .map-btn {
+    display: inline-block; margin-top: 1.5rem;
+    padding: 0.65rem 1.75rem;
+    border: 1px solid rgba(45,90,61,0.4);
+    border-radius: 30px; font-size: 11px;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: var(--green-deep); text-decoration: none;
+    transition: all 0.2s;
+  }
+  .map-btn:hover { background: var(--green-deep); color: white; }
+
+  /* ── RSVP ── */
+  #rsvp {
+    background: linear-gradient(135deg,
+      rgba(232,180,200,0.1),
+      rgba(184,169,212,0.15),
+      rgba(143,188,143,0.1));
+  }
+  .rsvp-form { max-width: 520px; margin: 0 auto; }
+  .form-group { margin-bottom: 1.25rem; }
+  .form-label {
+    display: block; font-size: 11px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--green-mid); margin-bottom: 0.4rem;
+  }
+  .form-input, .form-select, .form-textarea {
+    width: 100%; padding: 0.7rem 1rem;
+    border: 1px solid rgba(184,169,212,0.5);
+    border-radius: 10px;
+    background: rgba(255,255,255,0.9);
+    font-family: 'Lato', sans-serif; font-size: 14px;
+    color: var(--text-dark); outline: none; transition: border-color 0.2s;
+  }
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    border-color: var(--lavender);
+  }
+  .form-textarea { resize: vertical; min-height: 80px; }
+  .radio-group { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .radio-label {
+    display: flex; align-items: center; gap: 0.4rem;
+    font-size: 13px; color: var(--text-mid); cursor: pointer;
+    padding: 0.5rem 1rem;
+    border: 1px solid rgba(184,169,212,0.4);
+    border-radius: 20px; transition: all 0.2s;
+  }
+  .radio-label:has(input:checked) {
+    background: var(--lavender-light);
+    border-color: var(--lavender); color: var(--green-deep);
+  }
+  .radio-label input { display: none; }
+  .btn-submit {
+    width: 100%; padding: 0.9rem;
+    background: var(--green-deep); color: var(--white);
+    border: none; border-radius: 10px;
+    font-family: 'Lato', sans-serif; font-size: 12px;
+    letter-spacing: 2px; text-transform: uppercase;
+    cursor: pointer; transition: all 0.3s; margin-top: 0.5rem;
+  }
+  .btn-submit:hover { background: var(--green-mid); transform: translateY(-1px); }
+
+  /* ── DINNER (GATED) ── */
+  #dinner { background: var(--white); }
+  .gate-wrap { text-align: center; max-width: 420px; margin: 0 auto; }
+  .gate-note {
+    font-size: 13px; color: var(--text-mid);
+    margin-bottom: 1.5rem; line-height: 1.7;
+  }
+  .gate-input-row { display: flex; gap: 0.75rem; }
+  .btn-unlock {
+    padding: 0.7rem 1.25rem; white-space: nowrap;
+    background: var(--pink-deep); color: white;
+    border: none; border-radius: 10px;
+    font-size: 12px; letter-spacing: 1px; cursor: pointer; transition: all 0.2s;
+  }
+  .btn-unlock:hover { background: var(--pink-soft); color: var(--green-deep); }
+  .dinner-content { display: none; margin-top: 2rem; }
+  .dinner-content.visible { display: block; }
+  .coming-soon-chip {
+    display: inline-block; padding: 0.3rem 1rem;
+    background: rgba(232,180,200,0.25);
+    border: 1px solid rgba(196,120,154,0.3);
+    border-radius: 20px; font-size: 11px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--pink-deep); margin-bottom: 1rem;
+  }
+
+  /* ── HOTELS ── */
+  #hotels {
+    background: linear-gradient(135deg,
+      rgba(143,188,143,0.08), rgba(250,247,242,1));
+  }
+  .hotel-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.25rem; margin-top: 2rem;
+  }
+  .hotel-card {
+    padding: 1.25rem;
+    border: 1px solid rgba(184,169,212,0.3);
+    border-radius: 14px; background: white;
+  }
+  .hotel-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem; color: var(--green-deep);
+    font-style: italic; margin-bottom: 0.25rem;
+  }
+  .hotel-dist {
+    font-size: 11px; color: var(--lavender);
+    letter-spacing: 1px; margin-bottom: 0.5rem;
+  }
+  .hotel-note { font-size: 12px; color: var(--text-mid); line-height: 1.6; }
+
+  /* ── WALIMAH ── */
+  #walimah { background: var(--white); }
+  .walimah-banner {
+    background: linear-gradient(135deg,
+      rgba(184,169,212,0.2), rgba(232,180,200,0.15));
+    border: 1px solid rgba(184,169,212,0.35);
+    border-radius: 20px; padding: 3rem 2rem; text-align: center;
+  }
+  .tbd-badge {
+    display: inline-block; padding: 0.4rem 1.25rem;
+    background: rgba(184,169,212,0.25);
+    border: 1px solid rgba(184,169,212,0.5);
+    border-radius: 20px; font-size: 10px; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--lavender); margin-bottom: 1.25rem;
+  }
+
+  /* ── MEMORIES ── */
+  #memories {
+    background: linear-gradient(135deg,
+      rgba(232,180,200,0.08), rgba(184,169,212,0.1));
+  }
+  .memories-tabs { display: flex; gap: 0.75rem; margin-bottom: 2rem; }
+  .mem-tab {
+    padding: 0.5rem 1.25rem; border-radius: 20px;
+    font-size: 12px; letter-spacing: 1px; text-transform: uppercase;
+    border: 1px solid rgba(184,169,212,0.4); cursor: pointer;
+    transition: all 0.2s; background: transparent;
+    color: var(--text-mid); font-family: 'Lato', sans-serif;
+  }
+  .mem-tab.active {
+    background: var(--green-deep); color: white;
+    border-color: var(--green-deep);
+  }
+  .mem-panel { display: none; }
+  .mem-panel.active { display: block; }
+  .upload-zone {
+    border: 2px dashed rgba(184,169,212,0.5);
+    border-radius: 16px; padding: 3rem; text-align: center;
+    cursor: pointer; transition: all 0.2s;
+    background: rgba(255,255,255,0.6);
+  }
+  .upload-zone:hover {
+    border-color: var(--lavender);
+    background: rgba(221,213,239,0.15);
+  }
+  .upload-icon { font-size: 2rem; margin-bottom: 0.75rem; }
+  .upload-text { font-size: 13px; color: var(--text-mid); line-height: 1.7; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--green-deep);
+    color: rgba(255,255,255,0.85);
+    text-align: center; padding: 3rem 1.5rem;
+  }
+  .footer-names {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem; font-style: italic; font-weight: 300;
+    color: white; margin-bottom: 0.5rem;
+  }
+  .footer-note {
+    font-size: 11px; letter-spacing: 2px;
+    text-transform: uppercase; opacity: 0.6;
+  }
+
+  /* ── UTILITY ── */
+  .success-msg {
+    display: none; text-align: center; padding: 1.5rem;
+    background: rgba(143,188,143,0.15);
+    border: 1px solid rgba(143,188,143,0.4);
+    border-radius: 12px; color: var(--green-deep); font-size: 14px;
+  }
+  .success-msg.show { display: block; }
+  .wish-card {
+    background: white;
+    border: 1px solid rgba(184,169,212,0.3);
+    border-radius: 12px; padding: 1rem 1.25rem; margin-top: 1rem;
+    font-size: 13px; color: var(--text-mid); line-height: 1.7; font-style: italic;
+  }
+  .wish-name {
+    font-style: normal; font-weight: 400;
+    color: var(--green-deep); font-size: 11px;
+    letter-spacing: 1px; margin-top: 0.5rem;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    .hero-card { padding: 2rem 1.5rem; }
+    nav { gap: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#nikkah">Nikkah</a>
+  <a href="#rsvp">RSVP</a>
+  <a href="#dinner">Dinner</a>
+  <a href="#hotels">Hotels</a>
+  <a href="#walimah">Walimah</a>
+  <a href="#memories">Memories</a>
+</nav>
+
+<!-- ── HERO ── -->
+<div class="hero" id="home">
+  <video class="hero-video" autoplay muted loop playsinline>
+    <source src="nikkahBackground.mp4" type="video/mp4">
+  </video>
+  <div class="hero-overlay"></div>
+
+  <div class="hero-text">
+    <div class="hero-card">
+      <p class="hero-label">With love &amp; blessings, we invite you to celebrate</p>
+      <div class="hero-names">
+        Ryan
+        <span class="hero-and">&amp;</span>
+        Nawal
+      </div>
+      <p class="hero-date">The Nikkah &nbsp;&middot;&nbsp; Saturday, May 23rd &middot; 4:00 PM &nbsp;&middot;&nbsp; Villa Park, IL</p>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <div class="scroll-arrow"></div>
+    <span>scroll</span>
+  </div>
+</div>
+
+<!-- ── NIKKAH ── -->
+<section id="nikkah">
+  <div class="section-inner" style="text-align:center;">
+    <p class="section-label">The ceremony</p>
+    <h2 class="section-title">The Nikkah</h2>
+    <div class="divider"></div>
+    <p class="section-text">
+      Join us as we celebrate this sacred union in the presence of our loved ones.
+      We are overjoyed to share this blessed moment with you.
+    </p>
+    <div class="detail-grid">
+      <div class="detail-card">
+        <div class="detail-icon">🗓️</div>
+        <div class="detail-label">Date</div>
+        <div class="detail-value">Saturday, May 23rd</div>
+      </div>
+      <div class="detail-card">
+        <div class="detail-icon">🕓</div>
+        <div class="detail-label">Time</div>
+        <div class="detail-value">4:00 PM</div>
+      </div>
+      <div class="detail-card">
+        <div class="detail-icon">🕌</div>
+        <div class="detail-label">Venue</div>
+        <div class="detail-value">Islamic Foundation</div>
+      </div>
+      <div class="detail-card">
+        <div class="detail-icon">📍</div>
+        <div class="detail-label">Location</div>
+        <div class="detail-value">Villa Park, IL</div>
+      </div>
+    </div>
+    <a class="map-btn"
+       href="https://maps.google.com/?q=Islamic+Foundation+Villa+Park+IL"
+       target="_blank" rel="noopener">
+      View on Map
+    </a>
+  </div>
+</section>
+
+<!-- ── RSVP ── -->
+<section id="rsvp">
+  <div class="section-inner" style="text-align:center;">
+    <p class="section-label">Kindly respond</p>
+    <h2 class="section-title">RSVP</h2>
+    <div class="divider"></div>
+    <p class="section-text" style="margin-bottom:2.5rem;">
+      Please let us know if you'll be joining us for this joyful occasion.
+    </p>
+    <div class="rsvp-form" style="text-align:left;">
+      <div class="form-group">
+        <label class="form-label">Full Name</label>
+        <input class="form-input" type="text" placeholder="Your name" id="rsvp-name">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <input class="form-input" type="email" placeholder="your@email.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Will you be attending?</label>
+        <div class="radio-group">
+          <label class="radio-label">
+            <input type="radio" name="attending" value="yes"> Joyfully attending
+          </label>
+          <label class="radio-label">
+            <input type="radio" name="attending" value="no"> Unable to attend
+          </label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Number of guests (including yourself)</label>
+        <select class="form-select">
+          <option>1</option><option>2</option><option>3</option>
+          <option>4</option><option>5+</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Any notes or dietary needs?</label>
+        <textarea class="form-textarea" placeholder="Optional..."></textarea>
+      </div>
+      <button class="btn-submit" onclick="submitRSVP(this)">Send RSVP</button>
+      <div class="success-msg" id="rsvp-success">
+        Alhamdulillah! Your RSVP has been received. We can't wait to celebrate with you. 🌸
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── DINNER (GATED) ── -->
+<section id="dinner">
+  <div class="section-inner" style="text-align:center;">
+    <p class="section-label">Private</p>
+    <h2 class="section-title">Dinner &amp; Evening</h2>
+    <div class="divider"></div>
+    <div class="gate-wrap" id="dinnerGate">
+      <p style="font-size:2rem;margin-bottom:1rem;">🌿</p>
+      <p class="gate-note">
+        This section contains details for family and out-of-state guests.<br>
+        Please enter the access code shared with you privately.
+      </p>
+      <div class="gate-input-row">
+        <input class="form-input" type="password"
+               placeholder="Enter access code" id="dinnerCode"
+               onkeydown="if(event.key==='Enter') unlockDinner()">
+        <button class="btn-unlock" onclick="unlockDinner()">Unlock</button>
+      </div>
+      <p id="gate-error"
+         style="font-size:12px;color:var(--pink-deep);margin-top:0.6rem;display:none;">
+        Hmm, that code doesn't seem right. Please check and try again.
+      </p>
+    </div>
+
+    <div class="dinner-content" id="dinnerContent">
+      <div class="coming-soon-chip">Details Coming Soon</div>
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;
+                 font-weight:300;font-style:italic;color:var(--green-deep);
+                 margin-bottom:1rem;">Dinner Celebration</h3>
+      <p class="section-text">
+        We are so excited to host you for an intimate dinner following the Nikkah.
+        Details on the venue, time, and dinner specifics will be shared once finalized.
+        Thank you for traveling to be part of this special day. 💚
+      </p>
+      <div class="detail-grid" style="margin-top:2rem;">
+        <div class="detail-card">
+          <div class="detail-icon">📍</div>
+          <div class="detail-label">Venue</div>
+          <div class="detail-value">To be announced</div>
+        </div>
+        <div class="detail-card">
+          <div class="detail-icon">🕗</div>
+          <div class="detail-label">Time</div>
+          <div class="detail-value">To be announced</div>
+        </div>
+        <div class="detail-card">
+          <div class="detail-icon">🍽️</div>
+          <div class="detail-label">Dress Code</div>
+          <div class="detail-value">To be announced</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── HOTELS ── -->
+<section id="hotels">
+  <div class="section-inner" style="text-align:center;">
+    <p class="section-label">For our out-of-state guests</p>
+    <h2 class="section-title">Suggested Hotels</h2>
+    <div class="divider"></div>
+    <p class="section-text">
+      We want your stay to be as comfortable as possible. Here are some nearby options
+      close to the Islamic Foundation in Villa Park.
+    </p>
+    <div class="hotel-grid">
+      <div class="hotel-card">
+        <div class="hotel-name">Hilton Garden Inn</div>
+        <div class="hotel-dist">~5 min &middot; Lombard, IL</div>
+        <div class="hotel-note">Comfortable rooms, complimentary breakfast available. Great for families.</div>
+      </div>
+      <div class="hotel-card">
+        <div class="hotel-name">Hyatt Place</div>
+        <div class="hotel-dist">~8 min &middot; Lombard, IL</div>
+        <div class="hotel-note">Modern amenities, pool, and easy highway access. Ask about extended stays.</div>
+      </div>
+      <div class="hotel-card">
+        <div class="hotel-name">Marriott Courtyard</div>
+        <div class="hotel-dist">~10 min &middot; Oak Brook, IL</div>
+        <div class="hotel-note">Upscale option near shopping. Ideal for those planning to explore the area.</div>
+      </div>
+      <div class="hotel-card">
+        <div class="hotel-name">Hampton Inn</div>
+        <div class="hotel-dist">~7 min &middot; Elmhurst, IL</div>
+        <div class="hotel-note">Budget-friendly with free breakfast and free parking. Very convenient.</div>
+      </div>
+    </div>
+    <p style="font-size:12px;color:var(--text-mid);margin-top:1.5rem;font-style:italic;">
+      More specific recommendations and group rates will be added soon.
+    </p>
+  </div>
+</section>
+
+<!-- ── WALIMAH ── -->
+<section id="walimah">
+  <div class="section-inner" style="text-align:center;">
+    <p class="section-label">Coming soon</p>
+    <h2 class="section-title">The Walimah</h2>
+    <div class="divider"></div>
+    <div class="walimah-banner">
+      <div class="tbd-badge">Details to be announced</div>
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;
+                 font-weight:300;font-style:italic;color:var(--green-deep);
+                 margin-bottom:1rem;">
+        The celebration continues...
+      </h3>
+      <p class="section-text" style="max-width:480px;margin:0 auto;">
+        The Walimah — our wedding feast — will be held in the days following the Nikkah
+        as a communal celebration of this blessed union. Details on the date, venue, and
+        festivities are coming soon. We can't wait to celebrate with all of you.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ── MEMORIES & WISHES ── -->
+<section id="memories">
+  <div class="section-inner" style="text-align:center;">
+    <p class="section-label">Share your love</p>
+    <h2 class="section-title">Memories &amp; Wishes</h2>
+    <div class="divider"></div>
+    <p class="section-text" style="margin-bottom:2rem;">
+      Share photos from the day or leave a heartfelt wish — whether you're celebrating
+      with us or with us in spirit.
+    </p>
+    <div class="memories-tabs">
+      <button class="mem-tab active" onclick="switchTab('photos', this)">📷 Upload Photos</button>
+      <button class="mem-tab" onclick="switchTab('wishes', this)">💌 Leave a Wish</button>
+    </div>
+
+    <div class="mem-panel active" id="tab-photos">
+      <div class="upload-zone" onclick="document.getElementById('photoInput').click()">
+        <div class="upload-icon">🌸</div>
+        <div class="upload-text">
+          Tap or click to upload your photos<br>
+          <span style="font-size:11px;color:var(--lavender);">JPG, PNG &middot; Up to 10MB</span>
+        </div>
+        <input type="file" id="photoInput" accept="image/*" multiple
+               style="display:none" onchange="handleUpload(this)">
+      </div>
+      <div class="success-msg" id="upload-success" style="margin-top:1rem;">
+        Your photos have been uploaded! Jazakallah khayran for sharing this memory. 🌿
+      </div>
+    </div>
+
+    <div class="mem-panel" id="tab-wishes">
+      <div style="text-align:left;max-width:480px;margin:0 auto;">
+        <div class="form-group">
+          <label class="form-label">Your Name</label>
+          <input class="form-input" type="text" id="wish-name" placeholder="Your name">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Your Wish or Message</label>
+          <textarea class="form-textarea" id="wish-text"
+                    placeholder="Write your heartfelt message here..."
+                    style="min-height:120px;"></textarea>
+        </div>
+        <button class="btn-submit" onclick="submitWish()">Send Wish</button>
+      </div>
+      <div class="success-msg" id="wish-success" style="margin-top:1rem;">
+        Your wish has been received with so much love. Thank you! 🌸
+      </div>
+      <div id="wishes-display"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-names">Ryan &amp; Nawal</div>
+  <p class="footer-note">With gratitude &amp; joy &nbsp;&middot;&nbsp; Villa Park, IL</p>
+</footer>
+
+<script>
+  /* ── Tab switching ── */
+  function switchTab(tab, btn) {
+    document.querySelectorAll('.mem-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.mem-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('tab-' + tab).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  /* ── RSVP submit ── */
+  function submitRSVP(btn) {
+    const name = document.getElementById('rsvp-name').value.trim();
+    if (!name) { document.getElementById('rsvp-name').focus(); return; }
+    document.getElementById('rsvp-success').classList.add('show');
+    btn.style.display = 'none';
+  }
+
+  /* ── Dinner gate ──
+       Change the string below to your chosen access code (lowercase).        */
+  var DINNER_CODE = 'garden';
+
+  function unlockDinner() {
+    var input = document.getElementById('dinnerCode').value.trim().toLowerCase();
+    if (input === DINNER_CODE) {
+      document.getElementById('dinnerGate').style.display   = 'none';
+      document.getElementById('dinnerContent').classList.add('visible');
+      document.getElementById('gate-error').style.display   = 'none';
+    } else {
+      document.getElementById('gate-error').style.display   = 'block';
+    }
+  }
+
+  /* ── Photo upload ── */
+  function handleUpload(input) {
+    if (input.files && input.files.length > 0) {
+      document.getElementById('upload-success').classList.add('show');
+    }
+  }
+
+  /* ── Wishes ── */
+  function submitWish() {
+    var name = document.getElementById('wish-name').value.trim();
+    var text = document.getElementById('wish-text').value.trim();
+    if (!name || !text) return;
+    document.getElementById('wish-success').classList.add('show');
+    document.getElementById('wish-name').value = '';
+    document.getElementById('wish-text').value = '';
+    var card = document.createElement('div');
+    card.className = 'wish-card';
+    card.innerHTML = '\u201c' + text + '\u201d<div class="wish-name">\u2014 ' + name + '</div>';
+    document.getElementById('wishes-display').appendChild(card);
+  }
+</script>
+</body>
+</html>
