@@ -717,37 +717,7 @@
       with us or with us in spirit.
     </p>
     <div class="memories-tabs">
-      <button class="mem-tab active" onclick="switchTab('photos', this)">📷 Upload Photos</button>
       <button class="mem-tab" onclick="switchTab('wishes', this)">💌 Leave a Wish</button>
-    </div>
-
-    <!--
-      ════════════════════════════════════════════════════════════
-      PHOTO UPLOAD — powered by Formspree
-      NOTE: Formspree free plan supports file attachments up to 50MB per submission.
-      Create a SECOND form on Formspree for photo uploads and replace
-      YOUR_PHOTO_FORM_ID below with that form's ID.
-      ════════════════════════════════════════════════════════════
-    -->
-    <div class="mem-panel active" id="tab-photos">
-      <div class="upload-zone" onclick="document.getElementById('photoInput').click()">
-        <div class="upload-icon">🌸</div>
-        <div class="upload-text" id="upload-zone-text">
-          Tap or click to select your photos<br>
-          <span style="font-size:11px;color:var(--lavender);">JPG, PNG &middot; Up to 10MB each</span>
-        </div>
-        <input type="file" id="photoInput" accept="image/*" multiple
-               style="display:none" onchange="handleUpload(this)">
-      </div>
-      <div id="photo-name-display" style="margin-top:0.75rem;font-size:12px;color:var(--text-mid);display:none;"></div>
-      <button class="btn-submit" id="photo-submit-btn" onclick="submitPhotos()"
-              style="display:none;margin-top:1rem;">Send Photos</button>
-      <div class="success-msg" id="upload-success" style="margin-top:1rem;">
-        Your photos have been sent! Jazakallah khayran for sharing this memory. 🌿
-      </div>
-      <div class="error-msg" id="upload-error" style="margin-top:1rem;">
-        Something went wrong sending your photos. Please email them directly to ryan-and-nawal@proton.me
-      </div>
     </div>
 
     <!--
@@ -757,7 +727,7 @@
       YOUR_WISHES_FORM_ID below with that form's ID.
       ════════════════════════════════════════════════════════════
     -->
-    <div class="mem-panel" id="tab-wishes">
+    <div class="mem-panel active" id="tab-wishes">
       <div style="text-align:left;max-width:480px;margin:0 auto;">
         <div class="form-group">
           <label class="form-label">Your Name</label>
@@ -796,7 +766,6 @@
   //  Get them at https://formspree.io after creating each form.
   // ══════════════════════════════════════════════════════════════════
   var FORMSPREE_RSVP_ID   = 'xyklwoow';   // e.g. 'xpwzabcd'
-  var FORMSPREE_PHOTOS_ID = 'xeevgnnz';   // e.g. 'xknbefgh'
   var FORMSPREE_WISHES_ID = 'mojydrrn';  // e.g. 'xrgwijkl'
 
   // ── Tab switching ──
@@ -900,56 +869,6 @@
       document.getElementById('gate-error').style.display   = 'none';
     } else {
       document.getElementById('gate-error').style.display   = 'block';
-    }
-  }
-
-  // ── Photo upload ──
-  var selectedFiles = null;
-
-  function handleUpload(input) {
-    if (input.files && input.files.length > 0) {
-      selectedFiles = input.files;
-      var names = Array.from(input.files).map(f => f.name).join(', ');
-      var display = document.getElementById('photo-name-display');
-      display.textContent = '📎 ' + input.files.length + ' photo(s) selected: ' + names;
-      display.style.display = 'block';
-      document.getElementById('photo-submit-btn').style.display = 'block';
-    }
-  }
-
-  async function submitPhotos() {
-    if (!selectedFiles || selectedFiles.length === 0) return;
-
-    var btn = document.getElementById('photo-submit-btn');
-    btn.disabled = true;
-    btn.textContent = 'Sending...';
-    document.getElementById('upload-error').classList.remove('show');
-
-    var formData = new FormData();
-    formData.append('_subject', 'Nikkah Photo Upload — ' + selectedFiles.length + ' photo(s)');
-    formData.append('message', selectedFiles.length + ' photo(s) attached from nikkah website.');
-    for (var i = 0; i < selectedFiles.length; i++) {
-      formData.append('attachment', selectedFiles[i]);
-    }
-
-    try {
-      var res = await fetch('https://formspree.io/f/' + FORMSPREE_PHOTOS_ID, {
-        method: 'POST',
-        headers: { 'Accept': 'application/json' },
-        body: formData
-      });
-
-      if (res.ok) {
-        document.getElementById('upload-success').classList.add('show');
-        document.getElementById('photo-submit-btn').style.display = 'none';
-        document.getElementById('photo-name-display').style.display = 'none';
-      } else {
-        throw new Error('Server error');
-      }
-    } catch(e) {
-      btn.disabled = false;
-      btn.textContent = 'Send Photos';
-      document.getElementById('upload-error').classList.add('show');
     }
   }
 
