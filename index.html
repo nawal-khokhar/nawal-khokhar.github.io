@@ -98,6 +98,30 @@
     color: var(--green-deep); margin-bottom: 0.75rem;
     font-family: 'Lato', sans-serif; font-weight: 300;
   }
+  /* Add lang="ar" to your HTML element */
+
+ .hero-label {
+   font-family: 'Tahoma', 'Arial Unicode MS', sans-serif;
+   line-height: 1.5;
+  }
+
+ /* Remove unwanted spacing from Arabic text */
+ .hero-label:lang(ar) {
+   letter-spacing: normal;
+   word-spacing: normal;
+   text-spacing: ideograph-alpha;
+   -webkit-font-feature-settings: "liga" 1;
+   font-feature-settings: "liga" 1;
+   text-rendering: optimizeLegibility;
+ }
+
+  /* Prevent letter spacing on mobile */
+  @media (max-width: 768px) {
+    .hero-label:lang(ar) {
+      letter-spacing: 0;
+      font-size: 18px;
+    }
+  }
   .hero-names {
     font-family: 'Cormorant Garamond', serif;
     font-size: clamp(3rem, 8vw, 5.5rem);
