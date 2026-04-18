@@ -855,7 +855,7 @@
     var attending = document.querySelector('input[name="dinner-attending"]:checked');
     var guests    = document.getElementById('dinner-guests').value;
 
-    if (!name)     { document.getElementById('dinner-name').focus(); return; }
+    if (!name)      { document.getElementById('dinner-name').focus(); return; }
     if (!attending) { alert('Please let us know if you\'ll be attending dinner!'); return; }
 
     btn.disabled = true;
@@ -866,6 +866,12 @@
       var res = await fetch('https://formspree.io/f/' + FORMSPREE_RSVP_ID, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          name:      name,
+          attending: attending.value,
+          guests:    guests || 'Not specified',
+          _subject:  'Dinner RSVP — ' + name + ' (' + attending.value + ')'
+        })
       });
 
       if (res.ok) {
