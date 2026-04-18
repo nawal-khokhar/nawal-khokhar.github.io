@@ -291,8 +291,9 @@
   }
   .hotel-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: 1.25rem; margin-top: 2rem;
+    max-width: 560px; margin-left: auto; margin-right: auto;
   }
   .hotel-card {
     padding: 1.25rem;
@@ -567,7 +568,7 @@
 <section id="dinner">
   <div class="section-inner" style="text-align:center;">
     <p class="section-label">Private</p>
-    <h2 class="section-title">Dinner &amp; Evening</h2>
+    <h2 class="section-title">Evening Dinner</h2>
     <div class="divider"></div>
     <div class="gate-wrap" id="dinnerGate">
       <p style="font-size:2rem;margin-bottom:1rem;">🌿</p>
@@ -600,7 +601,7 @@
       <div class="detail-grid" style="margin-top:2rem;">
         <div class="detail-card">
           <div class="detail-icon">📍</div>
-          <div class="detail-label">Venue</div>
+          <div class="detail-label">Restaurant</div>
           <div class="detail-value">To be announced</div>
         </div>
         <div class="detail-card">
@@ -633,10 +634,6 @@
           <div class="form-group">
             <label class="form-label">Number of guests (including yourself)</label>
             <input class="form-input" type="number" id="dinner-guests" name="guests" min="1" max="20" placeholder="Enter number of guests" style="max-width:220px;">
-          </div>
-          <div class="form-group">
-            <label class="form-label">Dietary restrictions or notes</label>
-            <textarea class="form-textarea" id="dinner-note" name="message" placeholder="Optional..."></textarea>
           </div>
           <button class="btn-submit" id="dinner-rsvp-btn" onclick="submitDinnerRSVP(this)">Send Dinner RSVP</button>
           <div class="error-msg" id="dinner-rsvp-error">
@@ -713,45 +710,12 @@
 <section id="memories">
   <div class="section-inner" style="text-align:center;">
     <p class="section-label">Share your love</p>
-    <h2 class="section-title">Memories &amp; Wishes</h2>
+    <h2 class="section-title">Leave a Personalized Message</h2>
     <div class="divider"></div>
     <p class="section-text" style="margin-bottom:2rem;">
-      Share photos from the day or leave a heartfelt wish — whether you're celebrating
+      Leave a heartfelt wish — whether you're celebrating
       with us or with us in spirit.
     </p>
-    <div class="memories-tabs">
-      <button class="mem-tab active" onclick="switchTab('photos', this)">📷 Upload Photos</button>
-      <button class="mem-tab" onclick="switchTab('wishes', this)">💌 Leave a Wish</button>
-    </div>
-
-    <!--
-      ════════════════════════════════════════════════════════════
-      PHOTO UPLOAD — powered by Formspree
-      NOTE: Formspree free plan supports file attachments up to 50MB per submission.
-      Create a SECOND form on Formspree for photo uploads and replace
-      YOUR_PHOTO_FORM_ID below with that form's ID.
-      ════════════════════════════════════════════════════════════
-    -->
-    <div class="mem-panel active" id="tab-photos">
-      <div class="upload-zone" onclick="document.getElementById('photoInput').click()">
-        <div class="upload-icon">🌸</div>
-        <div class="upload-text" id="upload-zone-text">
-          Tap or click to select your photos<br>
-          <span style="font-size:11px;color:var(--lavender);">JPG, PNG &middot; Up to 10MB each</span>
-        </div>
-        <input type="file" id="photoInput" accept="image/*" multiple
-               style="display:none" onchange="handleUpload(this)">
-      </div>
-      <div id="photo-name-display" style="margin-top:0.75rem;font-size:12px;color:var(--text-mid);display:none;"></div>
-      <button class="btn-submit" id="photo-submit-btn" onclick="submitPhotos()"
-              style="display:none;margin-top:1rem;">Send Photos</button>
-      <div class="success-msg" id="upload-success" style="margin-top:1rem;">
-        Your photos have been sent! Jazakallah khayran for sharing this memory. 🌿
-      </div>
-      <div class="error-msg" id="upload-error" style="margin-top:1rem;">
-        Something went wrong sending your photos. Please email them directly to ryan-and-nawal@proton.me
-      </div>
-    </div>
 
     <!--
       ════════════════════════════════════════════════════════════
@@ -760,7 +724,7 @@
       YOUR_WISHES_FORM_ID below with that form's ID.
       ════════════════════════════════════════════════════════════
     -->
-    <div class="mem-panel" id="tab-wishes">
+    <div class="mem-panel active" id="tab-wishes">
       <div style="text-align:left;max-width:480px;margin:0 auto;">
         <div class="form-group">
           <label class="form-label">Your Name</label>
@@ -798,9 +762,8 @@
   //  Each form on Formspree has a unique ID like: xpwzabcd
   //  Get them at https://formspree.io after creating each form.
   // ══════════════════════════════════════════════════════════════════
-  var FORMSPREE_RSVP_ID   = 'YOUR_RSVP_FORM_ID';   // e.g. 'xpwzabcd'
-  var FORMSPREE_PHOTOS_ID = 'YOUR_PHOTO_FORM_ID';   // e.g. 'xknbefgh'
-  var FORMSPREE_WISHES_ID = 'YOUR_WISHES_FORM_ID';  // e.g. 'xrgwijkl'
+  var FORMSPREE_RSVP_ID   = 'xyklwoow';   // e.g. 'xpwzabcd'
+  var FORMSPREE_WISHES_ID = 'mojydrrn';  // e.g. 'xrgwijkl'
 
   // ── Tab switching ──
   function switchTab(tab, btn) {
@@ -858,9 +821,8 @@
     var name      = document.getElementById('dinner-name').value.trim();
     var attending = document.querySelector('input[name="dinner-attending"]:checked');
     var guests    = document.getElementById('dinner-guests').value;
-    var note      = document.getElementById('dinner-note').value.trim();
 
-    if (!name)     { document.getElementById('dinner-name').focus(); return; }
+    if (!name)      { document.getElementById('dinner-name').focus(); return; }
     if (!attending) { alert('Please let us know if you\'ll be attending dinner!'); return; }
 
     btn.disabled = true;
@@ -875,7 +837,6 @@
           name:      name,
           attending: attending.value,
           guests:    guests || 'Not specified',
-          message:   note,
           _subject:  'Dinner RSVP — ' + name + ' (' + attending.value + ')'
         })
       });
@@ -905,56 +866,6 @@
       document.getElementById('gate-error').style.display   = 'none';
     } else {
       document.getElementById('gate-error').style.display   = 'block';
-    }
-  }
-
-  // ── Photo upload ──
-  var selectedFiles = null;
-
-  function handleUpload(input) {
-    if (input.files && input.files.length > 0) {
-      selectedFiles = input.files;
-      var names = Array.from(input.files).map(f => f.name).join(', ');
-      var display = document.getElementById('photo-name-display');
-      display.textContent = '📎 ' + input.files.length + ' photo(s) selected: ' + names;
-      display.style.display = 'block';
-      document.getElementById('photo-submit-btn').style.display = 'block';
-    }
-  }
-
-  async function submitPhotos() {
-    if (!selectedFiles || selectedFiles.length === 0) return;
-
-    var btn = document.getElementById('photo-submit-btn');
-    btn.disabled = true;
-    btn.textContent = 'Sending...';
-    document.getElementById('upload-error').classList.remove('show');
-
-    var formData = new FormData();
-    formData.append('_subject', 'Nikkah Photo Upload — ' + selectedFiles.length + ' photo(s)');
-    formData.append('message', selectedFiles.length + ' photo(s) attached from nikkah website.');
-    for (var i = 0; i < selectedFiles.length; i++) {
-      formData.append('attachment', selectedFiles[i]);
-    }
-
-    try {
-      var res = await fetch('https://formspree.io/f/' + FORMSPREE_PHOTOS_ID, {
-        method: 'POST',
-        headers: { 'Accept': 'application/json' },
-        body: formData
-      });
-
-      if (res.ok) {
-        document.getElementById('upload-success').classList.add('show');
-        document.getElementById('photo-submit-btn').style.display = 'none';
-        document.getElementById('photo-name-display').style.display = 'none';
-      } else {
-        throw new Error('Server error');
-      }
-    } catch(e) {
-      btn.disabled = false;
-      btn.textContent = 'Send Photos';
-      document.getElementById('upload-error').classList.add('show');
     }
   }
 
