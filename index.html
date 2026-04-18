@@ -178,15 +178,12 @@
   #nikkah { background: var(--white); }
   .detail-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem; 
-    margin: 2.5rem 0;
-    justify-content: center;
-    max-width: 1200px; /* Limit maximum width */
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
+    grid-template-columns: repeat(3, 300px); /* Fixed width instead of 1fr */
+    gap: 1.5rem;
+    margin: 2.5rem auto; /* Center the grid */
+    max-width: 1200px; /* Limit total width */
   }
+
   .detail-card {
     text-align: center; padding: 1.75rem 1rem;
     border: 1px solid rgba(184,169,212,0.35);
