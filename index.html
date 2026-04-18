@@ -124,8 +124,6 @@
     color: var(--green-mid); margin-top: 1.25rem;
   }
 
-  .falling-petal { display: none; }
-
   .scroll-hint {
     position: absolute; bottom: 2rem; left: 50%;
     transform: translateX(-50%);
@@ -177,8 +175,14 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem; 
-    margin: 2.5rem 0;
-    justify-content: center;
+    margin: 2.5rem auto;
+    max-width: 560px;
+  }
+  .detail-grid .detail-card:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    max-width: 260px;
+    margin: 0 auto;
+    width: 100%;
   }
   .detail-card {
     text-align: center; padding: 1.75rem 1rem;
@@ -458,11 +462,10 @@
       surrounded by the love and support of those who matter most.
       <br><br>
     </p>
-    <p class="bold-text">"And one of His signs is that He created for you spouses from among yourselves 
-      so that you may find comfort in them. 
-       And He has placed between you compassion and mercy. 
-       Surely in this are signs for people who reflect."</p>
-    </p>
+    <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;color:var(--green-deep);line-height:1.8;max-width:600px;margin:0 auto;">"And one of His signs is that He created for you spouses from among yourselves
+      so that you may find comfort in them.
+      And He has placed between you compassion and mercy.
+      Surely in this are signs for people who reflect."</p>
     <p class="section-text">
       -[Surah Ar-Rum, 30:21]
     </p>
@@ -543,10 +546,7 @@
       </div>
       <div class="form-group">
         <label class="form-label">Number of guests (including yourself)</label>
-        <select class="form-select" id="rsvp-guests" name="guests">
-          <option>1</option><option>2</option><option>3</option>
-          <option>4</option><option>5+</option>
-        </select>
+        <input class="form-input" type="number" id="rsvp-guests" name="guests" min="1" max="20" placeholder="Enter number of guests" style="max-width:220px;">
       </div>
       <div class="form-group">
         <label class="form-label">Anything you want us to know?</label>
@@ -609,11 +609,47 @@
           <div class="detail-value">To be announced</div>
         </div>
       </div>
+
+      <!-- Dinner RSVP -->
+      <div style="margin-top:2.5rem;border-top:1px solid rgba(184,169,212,0.3);padding-top:2rem;">
+        <h4 style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:300;font-style:italic;color:var(--green-deep);margin-bottom:0.5rem;">Will you be joining us for dinner?</h4>
+        <p style="font-size:13px;color:var(--text-mid);margin-bottom:1.5rem;">Please let us know so we can plan accordingly.</p>
+        <div class="rsvp-form" style="text-align:left;" id="dinner-rsvp-wrap">
+          <div class="form-group">
+            <label class="form-label">Full Name</label>
+            <input class="form-input" type="text" id="dinner-name" name="name" placeholder="Your name">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Will you be attending dinner?</label>
+            <div class="radio-group">
+              <label class="radio-label">
+                <input type="radio" name="dinner-attending" value="Yes, attending dinner"> Yes, I'll be there!
+              </label>
+              <label class="radio-label">
+                <input type="radio" name="dinner-attending" value="Unable to attend dinner"> Unable to attend
+              </label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Number of guests (including yourself)</label>
+            <input class="form-input" type="number" id="dinner-guests" name="guests" min="1" max="20" placeholder="Enter number of guests" style="max-width:220px;">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Dietary restrictions or notes</label>
+            <textarea class="form-textarea" id="dinner-note" name="message" placeholder="Optional..."></textarea>
+          </div>
+          <button class="btn-submit" id="dinner-rsvp-btn" onclick="submitDinnerRSVP(this)">Send Dinner RSVP</button>
+          <div class="error-msg" id="dinner-rsvp-error">
+            Something went wrong. Please try again or email us at ryan-and-nawal@proton.me
+          </div>
+        </div>
+        <div class="success-msg" id="dinner-rsvp-success" style="margin-top:1rem;">
+          Thank you! We're so excited to have you at dinner. 💚
+        </div>
+      </div>
     </div>
   </div>
 </section>
-
-<!-- ── HOTELS ── -->
 <section id="hotels">
   <div class="section-inner" style="text-align:center;">
     <p class="section-label">For our out-of-state guests</p>
@@ -814,6 +850,46 @@
       btn.disabled = false;
       btn.textContent = 'Send RSVP';
       document.getElementById('rsvp-error').classList.add('show');
+    }
+  }
+
+  // ── Dinner RSVP submit ──
+  async function submitDinnerRSVP(btn) {
+    var name      = document.getElementById('dinner-name').value.trim();
+    var attending = document.querySelector('input[name="dinner-attending"]:checked');
+    var guests    = document.getElementById('dinner-guests').value;
+    var note      = document.getElementById('dinner-note').value.trim();
+
+    if (!name)     { document.getElementById('dinner-name').focus(); return; }
+    if (!attending) { alert('Please let us know if you\'ll be attending dinner!'); return; }
+
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+    document.getElementById('dinner-rsvp-error').classList.remove('show');
+
+    try {
+      var res = await fetch('https://formspree.io/f/' + FORMSPREE_RSVP_ID, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          name:      name,
+          attending: attending.value,
+          guests:    guests || 'Not specified',
+          message:   note,
+          _subject:  'Dinner RSVP — ' + name + ' (' + attending.value + ')'
+        })
+      });
+
+      if (res.ok) {
+        document.getElementById('dinner-rsvp-wrap').style.display = 'none';
+        document.getElementById('dinner-rsvp-success').classList.add('show');
+      } else {
+        throw new Error('Server error');
+      }
+    } catch(e) {
+      btn.disabled = false;
+      btn.textContent = 'Send Dinner RSVP';
+      document.getElementById('dinner-rsvp-error').classList.add('show');
     }
   }
 
