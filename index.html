@@ -98,6 +98,17 @@
     color: var(--green-deep); margin-bottom: 0.75rem;
     font-family: 'Lato', sans-serif; font-weight: 300;
   }
+  /* Remove letter-spacing from the Arabic text specifically */
+  .hero-label:lang(ar) {
+    letter-spacing: 0;
+    font-size: 16px; /* Make Arabic text larger */
+    line-height: 1.4;
+  }
+  /* Keep the existing styling for non-Arabic text */
+  .hero-label:not(:lang(ar)) {
+    letter-spacing: 4px;
+    font-size: 11px;
+  }
   .hero-names {
     font-family: 'Cormorant Garamond', serif;
     font-size: clamp(3rem, 8vw, 5.5rem);
@@ -409,7 +420,7 @@
 
   <div class="hero-text">
     <div class="hero-card">
-     <p class="hero-label">بِسْمِ ٱللّٰهِ ٱلرَّحْمٰنِ ٱلرَّحِيمِ</p> 
+     <p class="hero-label" lang="ar">بِسْمِ ٱللّٰهِ ٱلرَّحْمٰنِ ٱلرَّحِيمِ</p>
      <p class="hero-label">We invite you to celebrate the Nikkah of</p>
       <div class="hero-names">
         Ryan
