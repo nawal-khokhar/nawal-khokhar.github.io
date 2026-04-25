@@ -259,31 +259,6 @@
   .btn-submit:hover { background: var(--green-mid); transform: translateY(-1px); }
   .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 
-  /* ── DINNER (GATED) ── */
-  #dinner { background: var(--white); }
-  .gate-wrap { text-align: center; max-width: 420px; margin: 0 auto; }
-  .gate-note {
-    font-size: 13px; color: var(--text-mid);
-    margin-bottom: 1.5rem; line-height: 1.7;
-  }
-  .gate-input-row { display: flex; gap: 0.75rem; }
-  .btn-unlock {
-    padding: 0.7rem 1.25rem; white-space: nowrap;
-    background: var(--pink-deep); color: white;
-    border: none; border-radius: 10px;
-    font-size: 12px; letter-spacing: 1px; cursor: pointer; transition: all 0.2s;
-  }
-  .btn-unlock:hover { background: var(--pink-soft); color: var(--green-deep); }
-  .dinner-content { display: none; margin-top: 2rem; }
-  .dinner-content.visible { display: block; }
-  .coming-soon-chip {
-    display: inline-block; padding: 0.3rem 1rem;
-    background: rgba(232,180,200,0.25);
-    border: 1px solid rgba(196,120,154,0.3);
-    border-radius: 20px; font-size: 11px; letter-spacing: 2px;
-    text-transform: uppercase; color: var(--pink-deep); margin-bottom: 1rem;
-  }
-
   /* ── HOTELS ── */
   #hotels {
     background: linear-gradient(135deg,
@@ -332,32 +307,8 @@
     background: linear-gradient(135deg,
       rgba(232,180,200,0.08), rgba(184,169,212,0.1));
   }
-  .memories-tabs { display: flex; gap: 0.75rem; margin-bottom: 2rem; }
-  .mem-tab {
-    padding: 0.5rem 1.25rem; border-radius: 20px;
-    font-size: 12px; letter-spacing: 1px; text-transform: uppercase;
-    border: 1px solid rgba(184,169,212,0.4); cursor: pointer;
-    transition: all 0.2s; background: transparent;
-    color: var(--text-mid); font-family: 'Lato', sans-serif;
-  }
-  .mem-tab.active {
-    background: var(--green-deep); color: white;
-    border-color: var(--green-deep);
-  }
   .mem-panel { display: none; }
   .mem-panel.active { display: block; }
-  .upload-zone {
-    border: 2px dashed rgba(184,169,212,0.5);
-    border-radius: 16px; padding: 3rem; text-align: center;
-    cursor: pointer; transition: all 0.2s;
-    background: rgba(255,255,255,0.6);
-  }
-  .upload-zone:hover {
-    border-color: var(--lavender);
-    background: rgba(221,213,239,0.15);
-  }
-  .upload-icon { font-size: 2rem; margin-bottom: 0.75rem; }
-  .upload-text { font-size: 13px; color: var(--text-mid); line-height: 1.7; }
 
   /* ── FOOTER ── */
   footer {
@@ -416,7 +367,6 @@
 <nav>
   <a href="#nikkah">Nikkah</a>
   <a href="#rsvp">RSVP</a>
-  <a href="#dinner">Dinner</a>
   <a href="#hotels">Hotels</a>
   <a href="#walimah">Walimah</a>
   <a href="#memories">Messages</a>
@@ -515,16 +465,6 @@
       Please let us know by Sunday, May 3rd, if you'll be joining us for this joyful occasion.
     </p>
 
-    <!--
-      ════════════════════════════════════════════════════════════
-      RSVP FORM — powered by Formspree
-      HOW TO ACTIVATE:
-        1. Go to https://formspree.io and create a free account
-        2. Create a new form → set the email to ryan-and-nawal@proton.me
-        3. Copy your Form ID (looks like: xpwzabcd)
-        4. Replace YOUR_RSVP_FORM_ID below with your actual Form ID
-      ════════════════════════════════════════════════════════════
-    -->
     <div class="rsvp-form" style="text-align:left;" id="rsvp-form-wrap">
       <div class="form-group">
         <label class="form-label">Full Name</label>
@@ -564,89 +504,7 @@
   </div>
 </section>
 
-<!-- ── DINNER (GATED) ── -->
-<section id="dinner">
-  <div class="section-inner" style="text-align:center;">
-    <p class="section-label">Private</p>
-    <h2 class="section-title">Evening Dinner</h2>
-    <div class="divider"></div>
-    <div class="gate-wrap" id="dinnerGate">
-      <p style="font-size:2rem;margin-bottom:1rem;">🌿</p>
-      <p class="gate-note">
-        This section contains details for family<br>and out-of-state guests.<br>
-        Please enter the access code shared with you privately.
-      </p>
-      <div class="gate-input-row">
-        <input class="form-input" type="password"
-               placeholder="Enter access code" id="dinnerCode"
-               onkeydown="if(event.key==='Enter') unlockDinner()">
-        <button class="btn-unlock" onclick="unlockDinner()">Unlock</button>
-      </div>
-      <p id="gate-error"
-         style="font-size:12px;color:var(--pink-deep);margin-top:0.6rem;display:none;">
-        Hmm, that code doesn't seem right. Please check and try again.
-      </p>
-    </div>
-
-    <div class="dinner-content" id="dinnerContent">
-      <div class="coming-soon-chip">Details Coming Soon</div>
-      <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;
-                 font-weight:300;font-style:italic;color:var(--green-deep);
-                 margin-bottom:1rem;">Dinner Celebration</h3>
-      <p class="section-text">
-        We are so excited to host you for an intimate dinner following the Nikkah.
-        Details on the venue, time, and dinner specifics will be shared once finalized.
-        Thank you for traveling to be part of this special day. 💚
-      </p>
-      <div class="detail-grid" style="margin-top:2rem;">
-        <div class="detail-card">
-          <div class="detail-icon">📍</div>
-          <div class="detail-label">Restaurant</div>
-          <div class="detail-value">Al-Badia Tandoori<br>Villa Park, IL</div>
-        </div>
-        <div class="detail-card">
-          <div class="detail-icon">🕗</div>
-          <div class="detail-label">Time</div>
-          <div class="detail-value">6:00 PM</div>
-        </div>
-      </div>
-
-      <!-- Dinner RSVP -->
-      <div style="margin-top:2.5rem;border-top:1px solid rgba(184,169,212,0.3);padding-top:2rem;">
-        <h4 style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:300;font-style:italic;color:var(--green-deep);margin-bottom:0.5rem;">Will you be joining us for dinner?</h4>
-        <p style="font-size:13px;color:var(--text-mid);margin-bottom:1.5rem;">Please let us know so we can plan accordingly.</p>
-        <div class="rsvp-form" style="text-align:left;" id="dinner-rsvp-wrap">
-          <div class="form-group">
-            <label class="form-label">Full Name</label>
-            <input class="form-input" type="text" id="dinner-name" name="name" placeholder="Your name">
-          </div>
-          <div class="form-group">
-            <label class="form-label">Will you be attending dinner?</label>
-            <div class="radio-group">
-              <label class="radio-label">
-                <input type="radio" name="dinner-attending" value="Yes, attending dinner"> Yes, I'll be there!
-              </label>
-              <label class="radio-label">
-                <input type="radio" name="dinner-attending" value="Unable to attend dinner"> Unable to attend
-              </label>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Number of guests (including yourself)</label>
-            <input class="form-input" type="number" id="dinner-guests" name="guests" min="1" max="20" placeholder="Enter number of guests" style="max-width:220px;">
-          </div>
-          <button class="btn-submit" id="dinner-rsvp-btn" onclick="submitDinnerRSVP(this)">Send Dinner RSVP</button>
-          <div class="error-msg" id="dinner-rsvp-error">
-            Something went wrong. Please try again or email us at ryan-and-nawal@proton.me
-          </div>
-        </div>
-        <div class="success-msg" id="dinner-rsvp-success" style="margin-top:1rem;">
-          Thank you! We're so excited to have you at dinner. 💚
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+<!-- ── HOTELS ── -->
 <section id="hotels">
   <div class="section-inner" style="text-align:center;">
     <p class="section-label">For our out-of-state guests</p>
@@ -717,13 +575,6 @@
       with us or with us in spirit.
     </p>
 
-    <!--
-      ════════════════════════════════════════════════════════════
-      WISHES FORM — powered by Formspree
-      Create a THIRD form on Formspree for wishes and replace
-      YOUR_WISHES_FORM_ID below with that form's ID.
-      ════════════════════════════════════════════════════════════
-    -->
     <div class="mem-panel active" id="tab-wishes">
       <div style="text-align:left;max-width:480px;margin:0 auto;">
         <div class="form-group">
@@ -756,33 +607,19 @@
 </footer>
 
 <script>
-  // ══════════════════════════════════════════════════════════════════
-  //  FORMSPREE SETUP
-  //  Replace these three IDs with your actual Formspree form IDs.
-  //  Each form on Formspree has a unique ID like: xpwzabcd
-  //  Get them at https://formspree.io after creating each form.
-  // ══════════════════════════════════════════════════════════════════
-  var FORMSPREE_RSVP_ID   = 'xyklwoow';   // e.g. 'xpwzabcd'
-  var FORMSPREE_WISHES_ID = 'mojydrrn';  // e.g. 'xrgwijkl'
-
-  // ── Tab switching ──
-  function switchTab(tab, btn) {
-    document.querySelectorAll('.mem-tab').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.mem-panel').forEach(p => p.classList.remove('active'));
-    document.getElementById('tab-' + tab).classList.add('active');
-    btn.classList.add('active');
-  }
+  var FORMSPREE_RSVP_ID   = 'xyklwoow';
+  var FORMSPREE_WISHES_ID = 'mojydrrn';
 
   // ── RSVP submit ──
   async function submitRSVP(btn) {
-    var name     = document.getElementById('rsvp-name').value.trim();
-    var email    = document.getElementById('rsvp-email').value.trim();
+    var name      = document.getElementById('rsvp-name').value.trim();
+    var email     = document.getElementById('rsvp-email').value.trim();
     var attending = document.querySelector('input[name="attending"]:checked');
-    var guests   = document.getElementById('rsvp-guests').value;
-    var note     = document.getElementById('rsvp-note').value.trim();
+    var guests    = document.getElementById('rsvp-guests').value;
+    var note      = document.getElementById('rsvp-note').value.trim();
 
-    if (!name)  { document.getElementById('rsvp-name').focus(); return; }
-    if (!email) { document.getElementById('rsvp-email').focus(); return; }
+    if (!name)      { document.getElementById('rsvp-name').focus(); return; }
+    if (!email)     { document.getElementById('rsvp-email').focus(); return; }
     if (!attending) { alert('Please let us know if you\'ll be attending!'); return; }
 
     btn.disabled = true;
@@ -816,59 +653,6 @@
     }
   }
 
-  // ── Dinner RSVP submit ──
-  async function submitDinnerRSVP(btn) {
-    var name      = document.getElementById('dinner-name').value.trim();
-    var attending = document.querySelector('input[name="dinner-attending"]:checked');
-    var guests    = document.getElementById('dinner-guests').value;
-
-    if (!name)      { document.getElementById('dinner-name').focus(); return; }
-    if (!attending) { alert('Please let us know if you\'ll be attending dinner!'); return; }
-
-    btn.disabled = true;
-    btn.textContent = 'Sending...';
-    document.getElementById('dinner-rsvp-error').classList.remove('show');
-
-    try {
-      var res = await fetch('https://formspree.io/f/' + FORMSPREE_RSVP_ID, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({
-          name:      name,
-          attending: attending.value,
-          guests:    guests || 'Not specified',
-          _subject:  'Dinner RSVP — ' + name + ' (' + attending.value + ')'
-        })
-      });
-
-      if (res.ok) {
-        document.getElementById('dinner-rsvp-wrap').style.display = 'none';
-        document.getElementById('dinner-rsvp-success').classList.add('show');
-      } else {
-        throw new Error('Server error');
-      }
-    } catch(e) {
-      btn.disabled = false;
-      btn.textContent = 'Send Dinner RSVP';
-      document.getElementById('dinner-rsvp-error').classList.add('show');
-    }
-  }
-
-  // ── Dinner gate ──
-  // Change 'garden' to your chosen access code (any word, lowercase).
-  var DINNER_CODE = 'garden';
-
-  function unlockDinner() {
-    var input = document.getElementById('dinnerCode').value.trim().toLowerCase();
-    if (input === DINNER_CODE) {
-      document.getElementById('dinnerGate').style.display   = 'none';
-      document.getElementById('dinnerContent').classList.add('visible');
-      document.getElementById('gate-error').style.display   = 'none';
-    } else {
-      document.getElementById('gate-error').style.display   = 'block';
-    }
-  }
-
   // ── Wishes ──
   async function submitWish() {
     var name = document.getElementById('wish-name').value.trim();
@@ -895,7 +679,6 @@
         document.getElementById('wish-success').classList.add('show');
         btn.style.display = 'none';
 
-        // Show the wish on screen too
         var card = document.createElement('div');
         card.className = 'wish-card';
         card.innerHTML = '\u201c' + text + '\u201d<div class="wish-name">\u2014 ' + name + '</div>';
