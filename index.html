@@ -259,6 +259,31 @@
   .btn-submit:hover { background: var(--green-mid); transform: translateY(-1px); }
   .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 
+  /* ── DINNER (GATED) ── */
+  #dinner { background: var(--white); }
+  .gate-wrap { text-align: center; max-width: 420px; margin: 0 auto; }
+  .gate-note {
+    font-size: 13px; color: var(--text-mid);
+    margin-bottom: 1.5rem; line-height: 1.7;
+  }
+  .gate-input-row { display: flex; gap: 0.75rem; }
+  .btn-unlock {
+    padding: 0.7rem 1.25rem; white-space: nowrap;
+    background: var(--pink-deep); color: white;
+    border: none; border-radius: 10px;
+    font-size: 12px; letter-spacing: 1px; cursor: pointer; transition: all 0.2s;
+  }
+  .btn-unlock:hover { background: var(--pink-soft); color: var(--green-deep); }
+  .dinner-content { display: none; margin-top: 2rem; }
+  .dinner-content.visible { display: block; }
+  .coming-soon-chip {
+    display: inline-block; padding: 0.3rem 1rem;
+    background: rgba(232,180,200,0.25);
+    border: 1px solid rgba(196,120,154,0.3);
+    border-radius: 20px; font-size: 11px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--pink-deep); margin-bottom: 1rem;
+  }
+
   /* ── HOTELS ── */
   #hotels {
     background: linear-gradient(135deg,
@@ -367,6 +392,7 @@
 <nav>
   <a href="#nikkah">Nikkah</a>
   <a href="#rsvp">RSVP</a>
+  <a href="#dinner">Dinner</a>
   <a href="#hotels">Hotels</a>
   <a href="#walimah">Walimah</a>
   <a href="#memories">Messages</a>
@@ -465,41 +491,96 @@
       Please let us know by Sunday, May 3rd, if you'll be joining us for this joyful occasion.
     </p>
 
-    <div class="rsvp-form" style="text-align:left;" id="rsvp-form-wrap">
-      <div class="form-group">
-        <label class="form-label">Full Name</label>
-        <input class="form-input" type="text" id="rsvp-name" name="name" placeholder="Your name" required>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Email Address</label>
-        <input class="form-input" type="email" id="rsvp-email" name="email" placeholder="your@email.com" required>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Will you be attending?</label>
-        <div class="radio-group" id="rsvp-attending">
-          <label class="radio-label">
-            <input type="radio" name="attending" value="Joyfully attending"> Joyfully attending
-          </label>
-          <label class="radio-label">
-            <input type="radio" name="attending" value="Unable to attend"> Unable to attend
-          </label>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Number of guests (including yourself)</label>
-        <input class="form-input" type="number" id="rsvp-guests" name="guests" min="1" max="20" placeholder="Enter number of guests" style="max-width:220px;">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Anything you want us to know?</label>
-        <textarea class="form-textarea" id="rsvp-note" name="message" placeholder="Optional..."></textarea>
-      </div>
-      <button class="btn-submit" id="rsvp-btn" onclick="submitRSVP(this)">Send RSVP</button>
-      <div class="error-msg" id="rsvp-error">
-        Something went wrong. Please try again or email us directly at ryan-and-nawal@proton.me
+    <div class="rsvp-form" style="text-align:center;">
+      <div style="padding:2rem 1.5rem;border:1px solid rgba(184,169,212,0.4);border-radius:16px;background:rgba(255,255,255,0.7);">
+        <p style="font-size:1.75rem;margin-bottom:0.75rem;">🌸</p>
+        <p style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-style:italic;color:var(--green-deep);margin-bottom:0.75rem;">RSVPs are now closed</p>
+        <p style="font-size:13px;color:var(--text-mid);line-height:1.7;">Thank you to everyone who responded! If you have any questions, please reach out to us directly at <a href="mailto:ryan-and-nawal@proton.me" style="color:var(--green-deep);">ryan-and-nawal@proton.me</a>.</p>
       </div>
     </div>
-    <div class="success-msg" id="rsvp-success">
-      Alhamdulillah! Your RSVP has been received. We can't wait to celebrate with you. 🌸
+  </div>
+</section>
+
+<!-- ── DINNER (GATED) ── -->
+<section id="dinner">
+  <div class="section-inner" style="text-align:center;">
+    <p class="section-label">Private</p>
+    <h2 class="section-title">Evening Dinner</h2>
+    <div class="divider"></div>
+    <div class="gate-wrap" id="dinnerGate">
+      <p style="font-size:2rem;margin-bottom:1rem;">🌿</p>
+      <p class="gate-note">
+        This section contains details for family<br>and out-of-state guests.<br>
+        Please enter the access code shared with you privately.
+      </p>
+      <div class="gate-input-row">
+        <input class="form-input" type="password"
+               placeholder="Enter access code" id="dinnerCode"
+               onkeydown="if(event.key==='Enter') unlockDinner()">
+        <button class="btn-unlock" onclick="unlockDinner()">Unlock</button>
+      </div>
+      <p id="gate-error"
+         style="font-size:12px;color:var(--pink-deep);margin-top:0.6rem;display:none;">
+        Hmm, that code doesn't seem right. Please check and try again.
+      </p>
+    </div>
+
+    <div class="dinner-content" id="dinnerContent">
+      <div class="coming-soon-chip">Details Coming Soon</div>
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;
+                 font-weight:300;font-style:italic;color:var(--green-deep);
+                 margin-bottom:1rem;">Dinner Celebration</h3>
+      <p class="section-text">
+        We are so excited to host you for an intimate dinner following the Nikkah.
+        Details on the venue, time, and dinner specifics will be shared once finalized.
+        Thank you for traveling to be part of this special day. 💚
+      </p>
+      <div class="detail-grid" style="margin-top:2rem;">
+        <div class="detail-card">
+          <div class="detail-icon">📍</div>
+          <div class="detail-label">Restaurant</div>
+          <div class="detail-value">Al-Badia Tandoori<br>Villa Park, IL</div>
+        </div>
+        <div class="detail-card">
+          <div class="detail-icon">🕗</div>
+          <div class="detail-label">Time</div>
+          <div class="detail-value">6:00 PM</div>
+        </div>
+      </div>
+
+      <!-- Dinner RSVP -->
+      <div style="margin-top:2.5rem;border-top:1px solid rgba(184,169,212,0.3);padding-top:2rem;">
+        <h4 style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:300;font-style:italic;color:var(--green-deep);margin-bottom:0.5rem;">Will you be joining us for dinner?</h4>
+        <p style="font-size:13px;color:var(--text-mid);margin-bottom:1.5rem;">Please let us know so we can plan accordingly.</p>
+        <div class="rsvp-form" style="text-align:left;" id="dinner-rsvp-wrap">
+          <div class="form-group">
+            <label class="form-label">Full Name</label>
+            <input class="form-input" type="text" id="dinner-name" name="name" placeholder="Your name">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Will you be attending dinner?</label>
+            <div class="radio-group">
+              <label class="radio-label">
+                <input type="radio" name="dinner-attending" value="Yes, attending dinner"> Yes, I'll be there!
+              </label>
+              <label class="radio-label">
+                <input type="radio" name="dinner-attending" value="Unable to attend dinner"> Unable to attend
+              </label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Number of guests (including yourself)</label>
+            <input class="form-input" type="number" id="dinner-guests" name="guests" min="1" max="20" placeholder="Enter number of guests" style="max-width:220px;">
+          </div>
+          <button class="btn-submit" id="dinner-rsvp-btn" onclick="submitDinnerRSVP(this)">Send Dinner RSVP</button>
+          <div class="error-msg" id="dinner-rsvp-error">
+            Something went wrong. Please try again or email us at ryan-and-nawal@proton.me
+          </div>
+        </div>
+        <div class="success-msg" id="dinner-rsvp-success" style="margin-top:1rem;">
+          Thank you! We're so excited to have you at dinner. 💚
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -650,6 +731,58 @@
       btn.disabled = false;
       btn.textContent = 'Send RSVP';
       document.getElementById('rsvp-error').classList.add('show');
+    }
+  }
+
+  // ── Dinner RSVP submit ──
+  async function submitDinnerRSVP(btn) {
+    var name      = document.getElementById('dinner-name').value.trim();
+    var attending = document.querySelector('input[name="dinner-attending"]:checked');
+    var guests    = document.getElementById('dinner-guests').value;
+
+    if (!name)      { document.getElementById('dinner-name').focus(); return; }
+    if (!attending) { alert('Please let us know if you\'ll be attending dinner!'); return; }
+
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+    document.getElementById('dinner-rsvp-error').classList.remove('show');
+
+    try {
+      var res = await fetch('https://formspree.io/f/' + FORMSPREE_RSVP_ID, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          name:      name,
+          attending: attending.value,
+          guests:    guests || 'Not specified',
+          _subject:  'Dinner RSVP — ' + name + ' (' + attending.value + ')'
+        })
+      });
+
+      if (res.ok) {
+        document.getElementById('dinner-rsvp-wrap').style.display = 'none';
+        document.getElementById('dinner-rsvp-success').classList.add('show');
+      } else {
+        throw new Error('Server error');
+      }
+    } catch(e) {
+      btn.disabled = false;
+      btn.textContent = 'Send Dinner RSVP';
+      document.getElementById('dinner-rsvp-error').classList.add('show');
+    }
+  }
+
+  // ── Dinner gate ──
+  var DINNER_CODE = 'garden';
+
+  function unlockDinner() {
+    var input = document.getElementById('dinnerCode').value.trim().toLowerCase();
+    if (input === DINNER_CODE) {
+      document.getElementById('dinnerGate').style.display   = 'none';
+      document.getElementById('dinnerContent').classList.add('visible');
+      document.getElementById('gate-error').style.display   = 'none';
+    } else {
+      document.getElementById('gate-error').style.display   = 'block';
     }
   }
 
